@@ -34,3 +34,5 @@ url2
 
 webbrowser.open(url2)
 #Out[36]: True
+pd.read_html('http://dart.fss.or.kr/report/viewer.do?rcpNo=20191114000430&dcmNo=6956194&eleId=15&offset=584957&length=67556&dtd=dart3.xsd')
+# 제무제표 page파싱 판다스 데이터프레임으로, 주소 어떻게 얻징? 
