@@ -1,0 +1,8 @@
+import requests
+from bs4 import BeautifulSou as btfs
+
+url = 'http://dart.fss.or.kr/dsac001/mainY.do#'
+r = requests.get(url)
+html = r.content
+soup = BeautifulSoup(html, 'html.parser')
+titles_html = soup.select('div.table_list > tr')
