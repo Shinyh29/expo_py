@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSou as btfs
+from bs4 import BeautifulSoup as btfs
 
 url = 'http://dart.fss.or.kr/dsac001/mainY.do#'
 r = requests.get(url)
