@@ -1,0 +1,52 @@
+import pandas as pd
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
+import webbrowser
+
+#STEP 2 
+auth_key=apikey  # 다트api
+company_code="024110" #company code
+start_date="20050101"
+
+#STEP 3
+url = "http://dart.fss.or.kr/api/search.xml?auth="+auth_key+"&crp_cd="+company_code+"&start_dt="+start_date+"&bsn_tp=A001&bsn_tp=A002&bsn_tp=A003"
+
+#STEP 4
+resultXML=urlopen(url)  #this is for response of XML
+result=resultXML.read() #Using read method
+
+#STEP 5
+xmlsoup=BeautifulSoup(result,'html.parser')
+
+#STEP 6
+data = pd.DataFrame()
+
+te=xmlsoup.findAll("list")
+
+for t in te:
+    temp=pd.DataFrame(([[t.crp_cls.string,t.crp_nm.string,t.crp_cd.string,t.rpt_nm.string,
+        t.rcp_no.string,t.flr_nm.string,t.rcp_dt.string, t.rmk.string]]),
+        columns=["crp_cls","crp_nm","crp_cd","rpt_nm","rcp_no","flr_nm","rcp_dt","rmk"])
+    data=pd.concat([data,temp])
+
+#STEP 7 
+data=data.reset_index(drop=True)
+
+#OPTIONAL
+print(data)
+user_num=int(input("몇 번째 보고서를 확인하시겠습니까?"))
+url_user="http://dart.fss.or.kr/dsaf001/main.do?rcpNo="+data['rcp_no'][user_num]
+webbrowser.open(url_user)
+'''
+  crp_cls crp_nm  crp_cd                 rpt_nm          rcp_no flr_nm  \
+0       Y   기업은행  024110        분기보고서 (2019.09)  20191114002595   기업은행   
+1       Y   기업은행  024110        반기보고서 (2019.06)  20190814002895   기업은행   
+2       Y   기업은행  024110  [기재정정]분기보고서 (2019.03)  20190813000484   기업은행   
+3       Y   기업은행  024110  [기재정정]사업보고서 (2018.12)  20190813000456   기업은행   
+4       Y   기업은행  024110        분기보고서 (2019.03)  20190515002645   기업은행   
+5       Y   기업은행  024110        사업보고서 (2018.12)  20190401004404   기업은행   
+6       Y   기업은행  024110        분기보고서 (2018.09)  20181114002625   기업은행   
+7       Y   기업은행  024110        반기보고서 (2018.06)  20180814002808   기업은행   
+8       Y   기업은행  024110  [기재정정]사업보고서 (2017.12)  20180814001442   기업은행   
+9       Y   기업은행  024110        분기보고서 (2018.03)  20180515002315   기업은행   
+'''
