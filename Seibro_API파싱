@@ -10,11 +10,21 @@ soup = btfs(html, 'html.parser')
 
 import pandas as pd
 import requests
-requests.get(url, params = params)
+## requests.get(url, params = params)
 ##Out[5]: <Response [200]>
 
-requests.get(url, params = params).content
-requests.get(url, params = params).text
+
+
+
+
+
+
+
+
+
+
+## requests.get(url, params = params).content
+## requests.get(url, params = params).text
 
 # 텍스트 하나만 나오게
 for line in soup.select('data'): 
@@ -40,3 +50,8 @@ frame['종목명'] = 종목명
 frame['권리기준일자'] = 권리기준일자
 frame['권리락일자'] = 권리락일자
 print(frame)
+
+#''''''''''''''''''''''''''''''''''''''''''''''''''seibro종목코드 확인
+stockCode = "005930"
+html = requests.get('http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + SeibroAPI_key + "&apiId=getIssucoCustnoByIsin&params= " + "SHOTN_ISIN: " + stockCode).content
+### Out[156]: 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=26545a11dd74b9e00816f891ef1d72311df8b1a078bb6bb968d29ca46609c7d2&apiId=getIssucoCustnoByIsin&params=%20SHOTN_ISIN:%20005930'
