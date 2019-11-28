@@ -39,4 +39,4 @@ for line in soup.select('data'):
 frame['종목명'] = 종목명
 frame['권리기준일자'] = 권리기준일자
 frame['권리락일자'] = 권리락일자
-print(
+print(frame)
