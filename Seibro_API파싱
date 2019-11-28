@@ -20,6 +20,6 @@ for line in soup.select('data'):
     print(line)
 for line in soup.select('data'): 
     print(str(line.rep_secn_nm).split('="')[1].split('">')[0], "종목명")
-    print(line.rgt_std_dt, '권리기준일자')
-    print(line.xrgt_dt, '권리락일자')
+    print(str(line.rgt_std_dt).split('="')[1].split('">')[0], '권리기준일자')
+    print(str(line.xrgt_dt).split('="')[1].split('">')[0], '권리락일자')
     print("--------------------------------")
