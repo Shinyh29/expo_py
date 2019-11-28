@@ -19,7 +19,7 @@ requests.get(url, params = params).text
 for line in soup.select('data'): 
     print(line)
 for line in soup.select('data'): 
-    print(line.rep_secn_nm, '종목명')  
+    print(str(line.rep_secn_nm).split('="')[1].split('">')[0], "종목명")
     print(line.rgt_std_dt, '권리기준일자')
     print(line.xrgt_dt, '권리락일자')
     print("--------------------------------")
