@@ -1,0 +1,20 @@
+
+작동되는것 :: 
+## requests.get("http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=" + SeibroAPI_key + "&apiId=getDivSchedulInfo&params=ISSUCO_CUSTNO:593,BEGIN_STD_DT:20161231,EXPRY_STD_DT:20181231").content
+
+html = requests.get("http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=" + SeibroAPI_key + "&apiId=getDivSchedulInfo&params=ISSUCO_CUSTNO:593,BEGIN_STD_DT:20161231,EXPRY_STD_DT:20181231").text
+from bs4 import BeautifulSoup as btfs
+soup = btfs(html, 'html.parser')
+
+
+
+
+ import requests
+requests.get(url, params = params)
+##Out[5]: <Response [200]>
+
+requests.get(url, params = params).content
+requests.get(url, params = params).text
+
+for line in soup.select('data'): 
+    print(line)
