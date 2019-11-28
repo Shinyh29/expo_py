@@ -1,25 +1,42 @@
-
-작동되는것 :: 
+from bs4 import BeautifulSoup as btfs
+## 작동되는것 :: 
 ## requests.get("http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=" + SeibroAPI_key + "&apiId=getDivSchedulInfo&params=ISSUCO_CUSTNO:593,BEGIN_STD_DT:20161231,EXPRY_STD_DT:20181231").content
 
 html = requests.get("http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=" + SeibroAPI_key + "&apiId=getDivSchedulInfo&params=ISSUCO_CUSTNO:593,BEGIN_STD_DT:20161231,EXPRY_STD_DT:20181231").text
 from bs4 import BeautifulSoup as btfs
 soup = btfs(html, 'html.parser')
+## 이건 xml형식인가봥
 
 
-
-
- import requests
+import pandas as pd
+import requests
 requests.get(url, params = params)
 ##Out[5]: <Response [200]>
 
 requests.get(url, params = params).content
 requests.get(url, params = params).text
 
-for line in soup.select('data'): 
-    print(line)
+# 텍스트 하나만 나오게
 for line in soup.select('data'): 
     print(str(line.rep_secn_nm).split('="')[1].split('">')[0], "종목명")
     print(str(line.rgt_std_dt).split('="')[1].split('">')[0], '권리기준일자')
     print(str(line.xrgt_dt).split('="')[1].split('">')[0], '권리락일자')
     print("--------------------------------")
+
+
+# 데이터프레임 만들려면 
+종목명 = []
+권리기준일자=[]
+권리락일자=[]
+for line in soup.select('data'): 
+    print(str(line.rep_secn_nm).split('="')[1].split('">')[0], "종목명")
+    종목명.append(str(line.rep_secn_nm).split('="')[1].split('">')[0])
+    print(str(line.rgt_std_dt).split('="')[1].split('">')[0], '권리기준일자')
+    권리기준일자.append(str(line.rgt_std_dt).split('="')[1].split('">')[0])
+    print(str(line.xrgt_dt).split('="')[1].split('">')[0], '권리락일자')
+    권리락일자.append(str(line.xrgt_dt).split('="')[1].split('">')[0])
+    print("--------------------------------") 
+frame['종목명'] = 종목명
+frame['권리기준일자'] = 권리기준일자
+frame['권리락일자'] = 권리락일자
+print(
