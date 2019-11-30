@@ -62,7 +62,11 @@ def getSeibroCode(code):
     return str(soup.issuco_custno).split('="')[1].split('">')[0]
 
 
-
+# '''''''''''''''''''''''''''''''''''''''''''''''''seibro분배금, 배당내역 확인
+ def divinfo(std, code):
+    #seibro = getSeibroCode('code') 
+    url4  = 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getDivInfo&params=ISSUCO_CUSTNO:' + code + ',BEGIN_STD_DT:'+ str(std)
+    print(btfs(requests.get(url4).content, 'lxml'))
 
 
 
