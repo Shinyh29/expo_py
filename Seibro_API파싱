@@ -63,10 +63,26 @@ def getSeibroCode(code):
 
 
 # '''''''''''''''''''''''''''''''''''''''''''''''''seibro분배금, 배당내역 확인
- def divinfo(std, code):
+ def divinfo(std, ltd, code):
     #seibro = getSeibroCode('code') 
-    url4  = 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getDivInfo&params=ISSUCO_CUSTNO:' + code + ',BEGIN_STD_DT:'+ str(std)
-    print(btfs(requests.get(url4).content, 'lxml'))
+    url4  = 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getDivInfo&params=ISSUCO_CUSTNO:' + code + ',BEGIN_STD_DT:'+ str(std) + ',EXPRY_STD_DT:' + str(ltd)
+    soup = btfs(requests.get(url4).content, 'lxml')
+    for line in soup.select('data'): 
+        print(str(line.kor_secn_nm).split('="')[1].split('">')[0], "종목명")
+        #종목명.append(str(line.kor_secn_nm).split('="')[1].split('">')[0])
+        print(str(line.secn_kacd_nm).split('="')[1].split('">')[0], '종목종류')
+        #권리기준일자.append(str(line.rgt_std_dt).split('="')[1].split('">')[0])
+        print(str(line.pval).split('="')[1].split('">')[0], '액면가')
+        #권리락일자.append(str(line.xrgt_dt).split('="')[1].split('">')[0])
+        print(str(line.stk_aloc_ratio).split('="')[1].split('">')[0], '주식배정비율')
+        print(str(line.cash_aloc_ratio).split('="')[1].split('">')[0], '현금배정비율')
+        print(str(line.cash_aloc_amt).split('="')[1].split('">')[0], '현금배정금액')
+        print(str(line.martp_div_rate).split('="')[1].split('">')[0], '시가배당율')
+        print(str(line.th1_pay_term_begin_dt).split('="')[1].split('">')[0], '배당지금일')
+        print(str(line.deli_dt).split('="')[1].split('">')[0], '주식_교부일자')
+        print(str(line.majshr_etc_diff_aloc_yn).split('="')[1].split('">')[0], '대주주기타차등배정여부')
+        print(str(line.tstk_noagn_yn).split('="')[1].split('">')[0], '자사주무배정여부')
+        print("--------------------------------")
 
 
 
