@@ -68,7 +68,9 @@ df = pd.DataFrame()
 
 
 
-def divinfo(std, ltd, scode):
+def divinfo(std, ltd, code):
+    df = pd.DataFrame() #초기화
+    scode = getSeibroCode(code)
     종목명 = []
     종목종류=[]
     액면가 =[]
