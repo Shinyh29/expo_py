@@ -59,8 +59,8 @@ def getSeibroCode(code):
     soup = btfs(html, 'lxml')
     print(str(soup.issuco_custno).split('="')[1].split('">')[0])
     print(str(soup.rep_secn_nm).split('="')[1].split('">')[0])
-    return str(soup.issuco_custno).split('="')[1].split('">')[0]
-
+    scode =  str(soup.issuco_custno).split('="')[1].split('">')[0]
+    return scode
 
 # '''''''''''''''''''''''''''''''''''''''''''''''''seibro분배금, 배당내역 확인
 import pandas as pd
@@ -68,7 +68,7 @@ df = pd.DataFrame()
 
 
 
-def divinfo(std, ltd, code):
+def divinfo(std, ltd, scode):
     종목명 = []
     종목종류=[]
     액면가 =[]
@@ -81,7 +81,7 @@ def divinfo(std, ltd, code):
     대주주기타차등배정여부=[]
     자사주무배정여부=[]
     #seibro = getSeibroCode('code') 
-    url4  = 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getDivInfo&params=ISSUCO_CUSTNO:' + code + ',BEGIN_STD_DT:'+ str(std) + ',EXPRY_STD_DT:' + str(ltd)
+    url4  = 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getDivInfo&params=ISSUCO_CUSTNO:' + scode + ',BEGIN_STD_DT:'+ str(std) + ',EXPRY_STD_DT:' + str(ltd)
     soup = btfs(requests.get(url4).content, 'lxml')
     for line in soup.select('data'): 
         l1 = str(line.kor_secn_nm).split('="')[1].split('">')[0]
