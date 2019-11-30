@@ -52,9 +52,25 @@ frame['권리락일자'] = 권리락일자
 print(frame)
 
 #''''''''''''''''''''''''''''''''''''''''''''''''''seibro종목코드 확인
-stockCode = "005930"
-html = requests.get('http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + SeibroAPI_key + "&apiId=getIssucoCustnoByIsin&params= " + "SHOTN_ISIN: " + stockCode).content
-### Out[156]: 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=26545a11dd74b9e00816f891ef1d72311df8b1a078bb6bb968d29ca46609c7d2&apiId=getIssucoCustnoByIsin&params=%20SHOTN_ISIN:%20005930'
-print(str(btfs(html, 'lxml').result.issuco_custno).split('="')[1].split('">')[0], str(btfs(html, 'lxml').result.rep_secn_nm).split('="')[1].split('">')[0], 'SeibroCode')
+# code 는 6자리코드. 문자열로 전달
+def getSeibroCode(code): 
+    url ='http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getIssucoCustnoByIsin&params=SHOTN_ISIN:' + code
+    html = requests.get(url).text
+    soup = btfs(html, 'lxml')
+    print(str(soup.issuco_custno).split('="')[1].split('">')[0])
+    print(str(soup.rep_secn_nm).split('="')[1].split('">')[0])
+    return str(soup.issuco_custno).split('="')[1].split('">')[0]
+
+
+
+
+
+
+
+
+
+
+
+
 
 
