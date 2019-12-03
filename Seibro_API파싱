@@ -137,3 +137,49 @@ def divinfo(std, ltd, code):
 #divinfo(20140131,20171231, code)
 
 
+
+
+
+def div_schedule(std, ltd, code):
+    df = pd.DataFrame() #초기화
+    scode = getSeibroCode(code)
+    종목명 = []
+    권리기준일=[]
+    권리코드 =[]
+    권리락=[]
+  
+    #seibro = getSeibroCode('code') 
+    url3  = 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getDivSchedulInfo&params=ISSUCO_CUSTNO:' + scode + ',BEGIN_STD_DT:'+ str(std) + ',EXPRY_STD_DT:' + str(ltd)
+    soup = btfs(requests.get(url3).content, 'lxml')
+    for line in soup.select('data'): 
+        #print(line)
+        l1 = str(line.rep_secn_nm).split('="')[1].split('">')[0]
+        #print(l1)
+        종목명.append(l1)
+
+        l2 = str(line.rgt_std_dt).split('="')[1].split('">')[0]
+        #print(l2, '종목종류')
+        권리기준일.append(l2)
+
+        l3 = str(line.rgt_rsn_dtail_sort_cd).split('="')[1].split('">')[0] 
+        #print(l3, '액면가')
+        권리코드.append(l3)
+        
+        l4 = str(line.xrgt_dt).split('="')[1].split('">')[0] 
+        #print(l3, '액면가')
+        권리락.append(l4)
+        #l5 = str(line.xrgt_dt).split('="')[1].split('">')[0]
+        #권리락일자.append(l5)
+       
+        print("--------------------------------")
+    df['종목명']=종목명
+    df['권리기준일']=권리기준일
+    df['권리코드']=권리코드
+    df['권리락']=권리락
+    #df['주식배정비율']=주식배정비율
+
+    print(df)
+
+
+
+
