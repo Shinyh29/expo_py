@@ -68,10 +68,11 @@ df = pd.DataFrame()
 
 
 
-def divinfo(std, ltd, code):
+ def divinfo(std, ltd, code):
     df = pd.DataFrame() #초기화
     scode = getSeibroCode(code)
     종목명 = []
+    표준코드 =[]
     종목종류=[]
     액면가 =[]
     주식배정비율=[]
@@ -86,14 +87,17 @@ def divinfo(std, ltd, code):
     url4  = 'http://seibro.or.kr/OpenPlatform/callOpenAPI.jsp?key=' + 인증키 + '&apiId=getDivInfo&params=ISSUCO_CUSTNO:' + scode + ',BEGIN_STD_DT:'+ str(std) + ',EXPRY_STD_DT:' + str(ltd)
     soup = btfs(requests.get(url4).content, 'lxml')
     for line in soup.select('data'): 
+        l0 = str(line.isin).split('="')[1].split('">')[0]
+       #print(l1, "종목명")
+        표준코드.append(l0)
         l1 = str(line.kor_secn_nm).split('="')[1].split('">')[0]
         #print(l1, "종목명")
         종목명.append(l1)
-        
+
         l2 = str(line.secn_kacd_nm).split('="')[1].split('">')[0]
         #print(l2, '종목종류')
         종목종류.append(l2)
-        
+
         l3 = str(line.pval).split('="')[1].split('">')[0] 
         #print(l3, '액면가')
         액면가.append(l3)
@@ -101,16 +105,16 @@ def divinfo(std, ltd, code):
         l4 = str(line.stk_aloc_ratio).split('="')[1].split('">')[0]
         #print(l4, '주식배정비율')
         주식배정비율.append(l4)
-        
+
         l5 = str(line.cash_aloc_ratio).split('="')[1].split('">')[0]
         #print(l5, '현금배정비율')
         현금배정비율.append(l5)
         l6 = str(line.cash_aloc_amt).split('="')[1].split('">')[0]
         현금배정금액.append(l6)
-        
+
         l7 = str(line.martp_div_rate).split('="')[1].split('">')[0] 
         시가배당율.append(l7)
-        
+
         l8 = str(line.th1_pay_term_begin_dt).split('="')[1].split('">')[0]
         배당지금일.append(l8)
         l9= str(line.deli_dt).split('="')[1].split('">')[0]
@@ -120,6 +124,7 @@ def divinfo(std, ltd, code):
         l11 = str(line.tstk_noagn_yn).split('="')[1].split('">')[0]
         자사주무배정여부.append(l11)
         print("--------------------------------")
+    df['표준코드']=표준코드
     df['종목명']=종목명
     df['종목종류']=종목종류
     df['액면가']=액면가
@@ -133,8 +138,7 @@ def divinfo(std, ltd, code):
     df['자사주무배정여부']=자사주무배정여부
     print(df)
 
-
-#divinfo(20140131,20171231, code)
+## divinfo('20171231','20191204', "293940")
 
 
 
