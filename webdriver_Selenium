@@ -13,6 +13,11 @@ driver.get(url)
 time.sleep(4)
 t_option = driver.find_element_by_xpath('//*[@id="sd1_selectbox1_input_0"]/option[2]') #기간선택옵션
 t_option.click()
+
+ActionChains(driver).move_to_element(driver.find_elements_by_class_name('w2inputCalendar_col_input')[0]).click().click().send_keys('20190201').perform()
+ActionChains(driver).move_to_element(driver.find_elements_by_class_name('w2inputCalendar_col_input')[1]).click().click().send_keys('20190301').perform()
+## find_elements 로 다 찾아서 [0]첫번쨰것. 서치시작~ 다음것[1] 조회끗날 
+
 driver.find_element_by_xpath('//*[@id="image2"]').click() # 조회
 
 time.sleep(4)
@@ -27,9 +32,8 @@ def frame_sele(ppath):
     print(df)
     time.sleep(2)
     driver.find_element_by_xpath(ppath).click()
-    ActionChains(driver).move_to_element(driver.find_element_by_class_name('w2inputCalendar_col_input')).click().click().send_keys('20190301').perform()
+    #ActionChains(driver).move_to_element(driver.find_element_by_class_name('w2inputCalendar_col_input')).click().click().send_keys('20190301').perform()
     #더블클릭, 달력날짜값전달가능
-    
     
     
     
