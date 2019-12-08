@@ -57,6 +57,27 @@ try:
 except:
     print("")                        
                 
+                
+                
+                
+"""
+예외처리시도 (실패)
+while 1:
+    time.sleep(3)
+    try:
+        print(btfs(driver.page_source,'lxml').select('img')[0].get('src'))
+        WebDriverWait(driver, 3).until((expected_conditions.invisibility_of_element(driver.page_source,'lxml').select('img[src=images/progress/loading.gif]')))
+        next_page(ppath)
+    except ElementNotVisibleException:
+        print('lodging img passed')
+         for i in soup.select('body img'):  
+            print(i.get('alt'), i)        
+     ignal = '/images/progress/loading.gif'           
+     #####################찾았다###################################  대기중인 화면 로딩중 :: div 의 display:none상태로 만든다함 그것의 id값           
+     btfs(driver.page_source,'lxml').select('#___processbar2_i')           
+     출처 :            https://myjamong.tistory.com/54  셀레니움 대기시간 기다리기 
+                
+                
        
 print(dfs)
 # dfs  to   xlsx 
