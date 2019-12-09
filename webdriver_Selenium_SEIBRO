@@ -1,0 +1,83 @@
+import pandas as pd
+from pandas.tseries.offsets import BDay
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import ElementNotVisibleException
+driver = webdriver.Chrome(executable_path='C:\\chromedriver\\chromedriver.exe')
+url = "http://www.seibro.or.kr/websquare/control.jsp?w2xPath=/IPORTAL/user/company/BIP_CNTS01045V.xml&menuNo=284"
+from bs4 import BeautifulSoup as btfs
+
+import time
+today = pd.datetime.today()
+T = 2
+t_chain = 25
+t_end =  (today-BDay(T))
+print(t_end)
+t_start =  (t_end -BDay(t_chain))
+print(t_start)
+# .strftime('%Y%m%d')
+driver.get(url)
+time.sleep(2)
+
+
+ActionChains(driver).move_to_element(
+    driver.find_elements_by_class_name('w2inputCalendar_col_input')[0]).click().click().send_keys(t_start.strftime("%Y%m%d")).perform()
+ActionChains(driver).move_to_element(
+    driver.find_elements_by_class_name('w2inputCalendar_col_input')[1]).click().click().send_keys(t_end.strftime("%Y%m%d")).perform()
+## find_elements 로 다 찾아서 [0]첫번쨰것. 서치시작~ 다음것[1] 조회끗날
+
+driver.find_element_by_xpath('//*[@id="image2"]').click()  # 조회
+
+time.sleep(4)
+
+dfs = pd.DataFrame()
+
+
+def frame_sele(ppath):
+    global dfs
+    df = pd.read_html(driver.page_source)[0]
+    dfs = pd.concat([dfs, df])
+    print(ppath)
+    print(df.tail())
+    driver.find_element_by_xpath(ppath).click()
+    # ActionChains(driver).move_to_element(driver.find_element_by_class_name('w2inputCalendar_col_input')).click().click().send_keys('20190301').perform()
+    # 더블클릭, 달력날짜값전달가능 한달씩이 최적
+
+# wait until someid is clickable
+#wait = WebDriverWait(driver, 10)
+#element = wait.until(expected_conditions.element_to_be_clickable((By.ID, 'someid')))
+
+for i in range(1,5):
+    ppath = '//*[@id="cntsPaging01_page_%d"]' % i
+    time.sleep(3)
+    try:
+        WebDriverWait(driver, 20).until(expected_conditions.invisibility_of_element((By.CSS_SELECTOR, '#___processbar2_i')))
+        print('loaded-------!')
+        frame_sele(ppath)
+    except ElementNotVisibleException:
+        print('-------------로딩이 20초 넘어간경우--------or 안기다려도됨-----')
+        frame_sele(ppath)
+        try:
+            WebDriverWait(driver, 20).until(
+                expected_conditions.invisibility_of_element((By.CSS_SELECTOR, '#___processbar2_i')))
+            print('loaded-------!')
+            frame_sele(ppath)
+        except ElementNotVisibleException:
+            print('-------------로딩이 20초 넘어간경우--------or 안기다려도됨-----')
+            frame_sele(ppath)
+            try:
+                WebDriverWait(driver, 20).until(
+                    expected_conditions.invisibility_of_element((By.CSS_SELECTOR, '#___processbar2_i')))
+                print('loaded-------!')
+                frame_sele(ppath)
+            except ElementNotVisibleException:
+                print('-------------로딩이 20초 넘어간경우--------or 안기다려도됨-----')
+                frame_sele(ppath)
+                break
+
+print(dfs)
+
+print(type(dfs))
