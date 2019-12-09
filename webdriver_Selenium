@@ -26,7 +26,7 @@ time.sleep(4)
 dfs = pd.DataFrame()
 def frame_sele(ppath):
     global dfs
-    df = pd.read_html(driver.page_source)
+    df = pd.read_html(driver.page_source)[0]
     dfs = pd.concat([dfs,df])
     print(ppath)
     print(df)
