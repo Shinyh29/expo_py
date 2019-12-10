@@ -112,8 +112,8 @@ print(type(dfs))
 #### dfs.to_excel('C:\\seibros.xlsx')
 from openpyxl import load_workbook 
 
-excel_dir = 'C:\\seibros.xlsx' 
-wb = load_workbook(excel_dir) 
+excel_dir = 'C:\\seibros.xlsx'
+book = load_workbook(excel_dir)
 with pd.ExcelWriter(excel_dir, engine='openpyxl') as writer: 
     writer.book = wb 
     writer.sheets = dict((ws.title, ws) for ws in book.worksheets)  
