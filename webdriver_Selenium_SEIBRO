@@ -5,15 +5,25 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
+##from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import ElementNotVisibleException
+
 driver = webdriver.Chrome(executable_path='C:\\chrome_drv\\chromedriver.exe')
+
 url = "http://www.seibro.or.kr/websquare/control.jsp?w2xPath=/IPORTAL/user/company/BIP_CNTS01045V.xml&menuNo=284"
 from bs4 import BeautifulSoup as btfs
 
 import time
 today = pd.datetime.today()
-T = 0
+
+#### 이아래 전체를  크롤러로 만들 수도 있겠다. (단 10페이지가 넘어가면 곤란 ?)
+실행횟수 = 7
 t_chain = 25    #25 넘어가면 로딩길어짐 타임아웃
+T = 실행횟수 * t_chain + 1
+
+
+## t_chain __ is fixed
+## n 번째 실행: T == n * t_chain
 t_end =  (today-BDay(T))
 print(t_end)
 t_start =  (t_end -BDay(t_chain))
@@ -37,6 +47,9 @@ time.sleep(4)
 dfs = pd.DataFrame()
 
 
+
+
+
 def frame_sele(ppath):
     global dfs
     df = pd.read_html(driver.page_source)[0]
@@ -53,7 +66,7 @@ def frame_sele(ppath):
 #element = wait.until(expected_conditions.element_to_be_clickable((By.ID, 'someid')))
 last_page = len(driver.find_elements_by_class_name('w2pageList_li_label'))
 
-for i in range(1, last_page+1):
+for i in range(2, last_page+1):
     ppath = '//*[@id="cntsPaging01_page_%d"]' % i
     time.sleep(3)
     try:
@@ -109,17 +122,14 @@ except:
 print(dfs)
 
 print(type(dfs))
-#### dfs.to_excel('C:\\seibros.xlsx')
-from openpyxl import load_workbook 
-
-excel_dir = 'C:\\seibros.xlsx'
-book = load_workbook(excel_dir)
-with pd.ExcelWriter(excel_dir, engine='openpyxl') as writer: 
-    writer.book = wb 
-    writer.sheets = dict((ws.title, ws) for ws in book.worksheets)  
-
-    df.to_excel(writer, t_start.strftime("%Y%m%d")+"부터한달") 
-
-    writer.save()
+print(t_end)
+print(t_start)
 
 
+##dfs.to_excel('C:\\Users\\exp19103\\shinyh\\python\\' + t_start+'부터한달.xlsx')
+
+
+
+#writer = pd.ExcelWriter('C:\\seibros.xlsx', engine = 'xlsxwriter')
+dfs.to_excel('C:\\Users\\exp19103\\shinyh\\python\\' + t_start.strftime("%Y%m%d")+"_25.xlsx")
+#writer.save()
