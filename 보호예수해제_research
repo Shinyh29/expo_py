@@ -1,0 +1,17 @@
+
+import pandas as pd
+import FinanceDataReader as fdr
+path = 'C:\\Users\\exp19103\\shinyh\\python\\rockout_raw.xlsm'
+
+df = pd.read_excel(path, "raw")
+import matplotlib.pyplot as plt
+
+unit = fdr.DataReader(df['code6'][0], str(df[-50][0]), str(df[100][0]))
+
+
+
+
+
+plt.plot((unit['Change']+1).cumprod())
+# 날짜를 세분화 해서  두자. 쓸일있음. ex: 구간 색칠
+plt.axvspan(df[0][0], df[-50][0], facecolor='gray');plt.plot((unit['Change']+1).cumprod())
