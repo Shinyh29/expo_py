@@ -1,17 +1,35 @@
 
 import pandas as pd
 import FinanceDataReader as fdr
-path = 'C:\\Users\\exp19103\\shinyh\\python\\rockout_raw.xlsm'
+#path = 'C:\\Users\\exp19103\\shinyh\\python\\rockout_raw.xlsm'
 
+#df = pd.read_excel(path, "raw")
+#import matplotlib.pyplot as plt
+
+#unit = fdr.DataReader(df['code6'][0], str(df[-50][0]), str(df[100][0]))
+
+
+
+
+
+#plt.plot((unit['Change']+1).cumprod())
+# 날짜를 세분화 해서  두자. 쓸일있음. ex: 구간 색칠
+#plt.axvspan(df[0][0], df[-50][0], facecolor='gray');plt.plot((unit['Change']+1).cumprod())
+
+path = 'C:\\Users\\exp19103\\shinyh\\python\\rockout_raw.xlsm'
 df = pd.read_excel(path, "raw")
 import matplotlib.pyplot as plt
-
-unit = fdr.DataReader(df['code6'][0], str(df[-50][0]), str(df[100][0]))
-
-
-
-
-
-plt.plot((unit['Change']+1).cumprod())
-# 날짜를 세분화 해서  두자. 쓸일있음. ex: 구간 색칠
-plt.axvspan(df[0][0], df[-50][0], facecolor='gray');plt.plot((unit['Change']+1).cumprod())
+cums = pd.DataFrame()
+n = 0
+while 1: 
+    try: 
+        for i in list(df.code6):
+            unit = fdr.DataReader(df['code6'][n], str(df[-50][0]), str(df[100][0]))
+            unit_cump = (unit['Change']+1).cumprod()
+            cums['code6_%d'%n] = unit_cump
+            n= n+1
+            # 날짜를 세분화 해서  두자. 쓸일있음. ex: 구간 색칠'''
+    except: 
+        print(df['code6'][n], df['기업명'][n])
+        
+    #break
