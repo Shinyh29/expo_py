@@ -33,3 +33,15 @@ while 1:
         print(df['code6'][n], df['기업명'][n])
         
     #break
+
+
+
+
+
+
+
+
+
+pds = pd.concat([df.groupby('시장구분').get_group('유가증권시장'),df.groupby('시장구분').get_group('코스닥시장')])
+pds.시장구분
+pds[-50]~~
