@@ -38,6 +38,27 @@ while 1:
 
 
 
+n =1
+cums = pd.DataFrame()
+while 1:
+    try:
+        for i in list(u1.code6):
+            
+            unit = fdr.DataReader(u1['code6'][n], str(u1[-50][n]), str(u1[100][n]))
+            unit_cump = (unit['Change']+1).cumprod()
+            cums['code6_%d' %n] = unit_cump
+            n = n+1
+    except:
+        if n == len(list(u1.code6)):
+            break
+        print(df['code6'][n], df['기업명'][n])
+        n = n+1
+        
+        continue
+    if n == len(list(u1.code6)):
+        break
+
+
 
 
 
