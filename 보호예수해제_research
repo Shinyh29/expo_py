@@ -28,13 +28,19 @@ for n in range(0,len(pds.code6)):
 
 ##################################################################
 cums = pd.DataFrame()
+codes = []
 for n in range(0,len(pds.code6)):
-    try:
-        unit = fdr.DataReader(pds['code6'][n], str(pds[-50][n]), str(pds[100][n]))
-        unit = unit.reset_index(drop=True)
-        unit_cump = (unit['Change'] + 1).cumprod()
-        print( n ,  pds['기업명'][n])
-        cums['code6_%d' % n] = unit_cump
-    except:
-        print( n, 'nope', pds['기업명'][n])
-        #n = n+1
+    if pds['code6'][n] in codes:
+        print(pds['code6'][n], '중복!')
+        pass
+    else:
+        
+        try:
+            codes.append(pds['code6'][n])
+            unit = fdr.DataReader(pds['code6'][n], str(pds[-50][n]), str(pds[100][n]))
+            unit = unit.reset_index(drop=True)
+            unit_cump = (unit['Change'] + 1).cumprod()
+            print( n ,  pds['기업명'][n])
+            cums['code6_%d' % n] = unit_cump
+        except:
+            print( n, 'nope', pds['기업명'][n])
