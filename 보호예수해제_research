@@ -44,3 +44,15 @@ for n in range(0,len(pds.code6)):
             cums['code6_%d' % n] = unit_cump
         except:
             print( n, 'nope', pds['기업명'][n])
+            
+            
+            
+            
+            
+#######       
+cums 가 
+# 
+cums.sum(axis=1)/len(list(cums.columns))
+
+# 전체 플롯
+plt.plot(cums.sum(axis=1)/len(list(cums.columns)))
