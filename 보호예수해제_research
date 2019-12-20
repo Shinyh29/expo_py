@@ -1,93 +1,40 @@
-
 import pandas as pd
 import FinanceDataReader as fdr
-#path = 'C:\\Users\\exp19103\\shinyh\\python\\rockout_raw.xlsm'
 
-#df = pd.read_excel(path, "raw")
-#import matplotlib.pyplot as plt
-
-#unit = fdr.DataReader(df['code6'][0], str(df[-50][0]), str(df[100][0]))
-
-
-
-
-
-#plt.plot((unit['Change']+1).cumprod())
+# plt.plot((unit['Change']+1).cumprod())
 # 날짜를 세분화 해서  두자. 쓸일있음. ex: 구간 색칠
-#plt.axvspan(df[0][0], df[-50][0], facecolor='gray');plt.plot((unit['Change']+1).cumprod())
+# plt.axvspan(df[0][0], df[-50][0], facecolor='gray');plt.plot((unit['Change']+1).cumprod())
 
-path = 'C:\\Users\\exp19103\\shinyh\\python\\rockout_raw.xlsm'
+path = 'C:\\Users\\exp19103\\shinyh\\python\\raws.xlsm'
 df = pd.read_excel(path, "raw")
 import matplotlib.pyplot as plt
+
+pds = pd.concat([df.groupby('시장구분').get_group('유가증권시장'), df.groupby('시장구분').get_group('코스닥시장')])
+pds = pds.reset_index(drop=True)
+#pds.시장구분
+#list(pds.columns)
+############################################################
+
+##n = 0
 cums = pd.DataFrame()
-n = 0
-while 1: 
-    try: 
-        for i in list(df.code6):
-            unit = fdr.DataReader(df['code6'][n], str(df[-50][0]), str(df[100][0]))
-            unit_cump = (unit['Change']+1).cumprod()
-            cums['code6_%d'%n] = unit_cump
-            n= n+1
-            # 날짜를 세분화 해서  두자. 쓸일있음. ex: 구간 색칠'''
-    except: 
-        print(df['code6'][n], df['기업명'][n])
-        
-    #break
+for n in range(0,len(pds.code6)):
+    unit = fdr.DataReader(pds['code6'][n], str(pds[-50][n]), str(pds[100][n]))
+    unit = unit.reset_index(drop=True)
+    unit_cump = (unit['Change'] + 1).cumprod()
+    print( n ,  pds['기업명'][n])
+    cums['code6_%d' % n] = unit_cump
 
 
 
-################################################################ col 내의 특정 값을 가진 녀석. 들을 분류해놓고, 가져온것. 
-## 여기서 n 은   단순히  n +1 이 아니라  원본 기업명의 index 
-df == 원본테이블  ,  u1 == 새테이블
-
-n =1
-cums = pd.DataFrame()
-while 1:
-    try:
-        for i in list(u1.code6):
-            
-            unit = fdr.DataReader(u1['code6'][n], str(u1[-50][n]), str(u1[100][n]))
-            unit_cump = (unit['Change']+1).cumprod()
-            cums['code6_%d' %n] = unit_cump
-            n = n+1
-    except:
-        if n == len(list(u1.code6)):
-            break
-        print(df['code6'][n], df['기업명'][n])
-        n = n+1
-        
-        continue
-    if n == len(list(u1.code6)):
-        break
-
-
-######################################################################
- n =1
-cums = pd.DataFrame()
-while 1:
-    try:
-        for i in list(u1.code6):
-            
-            unit = fdr.DataReader(u1['code6'][n], str(u1[-50][n]), str(u1[100][n]))
-            unit.reset_index(drop =True)
-            unit_cump = (unit['Change']+1).cumprod()
-            cums['code6_%d' %n] = unit_cump
-            n = n+1
-    except:
-        if n == len(list(u1.code6)):
-            break
-        print(df['code6'][n], df['기업명'][n])
-        n = n+1
-        
-        continue
-    if n == len(list(u1.code6)):
-        break
 ##################################################################
-
-
-
-
-
-pds = pd.concat([df.groupby('시장구분').get_group('유가증권시장'),df.groupby('시장구분').get_group('코스닥시장')])
-pds.시장구분
-pds[-50]~~
+cums = pd.DataFrame()
+for n in range(0,len(pds.code6)):
+    try:
+        unit = fdr.DataReader(pds['code6'][n], str(pds[-50][n]), str(pds[100][n]))
+        unit = unit.reset_index(drop=True)
+        unit_cump = (unit['Change'] + 1).cumprod()
+        print( n ,  pds['기업명'][n])
+        cums['code6_%d' % n] = unit_cump
+    except:
+        print( n, 'nope', pds['기업명'][n])
+        #n = n+1
