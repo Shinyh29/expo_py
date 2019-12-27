@@ -1,0 +1,64 @@
+import pandas as pd
+import os
+
+frame = pd.DataFrame()
+zpath = "C:\\Users\\exp19103\\shinyh\\python\\"
+fd = os.listdir("C:\\Users\\exp19103\\shinyh\\python")
+frame = pd.DataFrame(data= fd[0:-4] ,columns = ['xl_path'])
+## zpath + frame['xl_path']
+frame = zpath + frame['xl_path']
+
+# frame[숫자]  : Full_Path 
+
+
+"""
+
+0     C:\Users\exp19103\shinyh\python\20150518_25.xlsx
+1     C:\Users\exp19103\shinyh\python\20150622_25.xlsx
+2     C:\Users\exp19103\shinyh\python\20150727_25.xlsx
+3     C:\Users\exp19103\shinyh\python\20150831_25.xlsx
+4     C:\Users\exp19103\shinyh\python\20151005_25.xlsx
+5     C:\Users\exp19103\shinyh\python\20151109_25.xlsx
+6     C:\Users\exp19103\shinyh\python\20151214_25.xlsx
+7     C:\Users\exp19103\shinyh\python\20160118_25.xlsx
+8     C:\Users\exp19103\shinyh\python\20160222_25.xlsx
+9     C:\Users\exp19103\shinyh\python\20160328_25.xlsx
+10    C:\Users\exp19103\shinyh\python\20160502_25.xlsx
+11    C:\Users\exp19103\shinyh\python\20160606_25.xlsx
+12    C:\Users\exp19103\shinyh\python\20160711_25.xlsx
+13    C:\Users\exp19103\shinyh\python\20160815_25.xlsx
+14    C:\Users\exp19103\shinyh\python\20160919_25.xlsx
+15    C:\Users\exp19103\shinyh\python\20161024_25.xlsx
+16    C:\Users\exp19103\shinyh\python\20161128_25.xlsx
+17    C:\Users\exp19103\shinyh\python\20170102_25.xlsx
+18    C:\Users\exp19103\shinyh\python\20170206_25.xlsx
+19    C:\Users\exp19103\shinyh\python\20170313_25.xlsx
+20    C:\Users\exp19103\shinyh\python\20170417_25.xlsx
+21    C:\Users\exp19103\shinyh\python\20170612_25.xlsx
+22    C:\Users\exp19103\shinyh\python\20170717_25.xlsx
+23    C:\Users\exp19103\shinyh\python\20170821_25.xlsx
+24    C:\Users\exp19103\shinyh\python\20170930_25.xlsx
+25    C:\Users\exp19103\shinyh\python\20171204_25.xlsx
+26    C:\Users\exp19103\shinyh\python\20180108_25.xlsx
+27    C:\Users\exp19103\shinyh\python\20180212_25.xlsx
+28    C:\Users\exp19103\shinyh\python\20180319_25.xlsx
+29    C:\Users\exp19103\shinyh\python\20180402_25.xlsx
+30    C:\Users\exp19103\shinyh\python\20180423_25.xlsx
+31    C:\Users\exp19103\shinyh\python\20180525_25.xlsx
+32    C:\Users\exp19103\shinyh\python\20180629_25.xlsx
+33    C:\Users\exp19103\shinyh\python\20180806_25.xlsx
+34    C:\Users\exp19103\shinyh\python\20180910_25.xlsx
+35    C:\Users\exp19103\shinyh\python\20180911_25.xlsx
+36    C:\Users\exp19103\shinyh\python\20181016_25.xlsx
+37    C:\Users\exp19103\shinyh\python\20181120_25.xlsx
+38    C:\Users\exp19103\shinyh\python\20181225_25.xlsx
+39    C:\Users\exp19103\shinyh\python\20190129_25.xlsx
+40    C:\Users\exp19103\shinyh\python\20190305_25.xlsx
+41    C:\Users\exp19103\shinyh\python\20190409_25.xlsx
+42    C:\Users\exp19103\shinyh\python\20190514_25.xlsx
+43    C:\Users\exp19103\shinyh\python\20190618_25.xlsx
+44    C:\Users\exp19103\shinyh\python\20190723_25.xlsx
+45    C:\Users\exp19103\shinyh\python\20190827_25.xlsx
+46    C:\Users\exp19103\shinyh\python\20191001_25.xlsx
+47    C:\Users\exp19103\shinyh\python\20191106_25.xlsx
+"""
