@@ -17,20 +17,20 @@ import time
 today = pd.datetime.today()
 
 #### 이아래 전체를  크롤러로 만들 수도 있겠다. (단 10페이지가 넘어가면 곤란 ?)
-실행횟수 = 7
+실행횟수 = 28
 t_chain = 25    #25 넘어가면 로딩길어짐 타임아웃
-T = 실행횟수 * t_chain + 1
+T = 실행횟수 * t_chain +3  ## 해가 넘어가니까 +1 ?
 
 
 ## t_chain __ is fixed
 ## n 번째 실행: T == n * t_chain
-t_end =  (today-BDay(T))
+t_end =  (today-BDay(T)-pd.tseries.offsets.Day(1))
 print(t_end)
-t_start =  (t_end -BDay(t_chain))
+t_start =  (t_end -BDay(t_chain))   #+ pd.tseries.offsets.Day(5)
 print(t_start)
 # .strftime('%Y%m%d')
 driver.get(url)
-time.sleep(4)
+time.sleep(4.5)
 
 
 ActionChains(driver).move_to_element(
@@ -65,6 +65,10 @@ def frame_sele(ppath):
 #wait = WebDriverWait(driver, 10)
 #element = wait.until(expected_conditions.element_to_be_clickable((By.ID, 'someid')))
 last_page = len(driver.find_elements_by_class_name('w2pageList_li_label'))
+#if last_page >10:
+#    last_page~~~~ 이때는 또 err 가 났음
+#
+
 
 for i in range(2, last_page+1):
     ppath = '//*[@id="cntsPaging01_page_%d"]' % i
@@ -124,8 +128,8 @@ print(dfs)
 print(type(dfs))
 print(t_end)
 print(t_start)
-
-
+print('실행횟수_from today : ',  실행횟수)
+driver.quit()
 ##dfs.to_excel('C:\\Users\\exp19103\\shinyh\\python\\' + t_start+'부터한달.xlsx')
 
 
@@ -133,3 +137,4 @@ print(t_start)
 #writer = pd.ExcelWriter('C:\\seibros.xlsx', engine = 'xlsxwriter')
 dfs.to_excel('C:\\Users\\exp19103\\shinyh\\python\\' + t_start.strftime("%Y%m%d")+"_25.xlsx")
 #writer.save()
+
