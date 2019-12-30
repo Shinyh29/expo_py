@@ -48,7 +48,7 @@ for n in range(0,len(pds.code6)):
             
             
             
-            
+cums.to_excel(~~)            
 #######       
 cums 가 
 # 
@@ -56,3 +56,8 @@ cums.sum(axis=1)/len(list(cums.columns))
 
 # 전체 플롯
 plt.plot(cums.sum(axis=1)/len(list(cums.columns)))
+
+
+
+import numpy as np
+#  np.where( 조건문 )   >> 참인 애들 index 나옴
