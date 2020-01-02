@@ -27,6 +27,18 @@ for n in range(0,len(pds.code6)):
 
 
 ##################################################################
+path = 'C:\\Users\\exp19103\\shinyh\\python\\rawframes.xlsx'
+df = pd.read_excel(path, "Sheet1")
+import matplotlib.pyplot as plt
+import time
+#pds = pd.concat([df.groupby('시장구분').get_group('유가증권시장'), df.groupby('시장구분').get_group('코스닥시장')])
+#pds = pds.reset_index(drop=True)
+#pds.시장구분
+#list(pds.columns)
+##
+pds = df
+
+##################################################################
 cums = pd.DataFrame()
 codes = []
 for n in range(0,len(pds.code6)):
@@ -34,23 +46,19 @@ for n in range(0,len(pds.code6)):
         print(pds['code6'][n], '중복!')
         pass
     else:
-        
+
         try:
             codes.append(pds['code6'][n])
-            unit = fdr.DataReader(pds['code6'][n], str(pds[-50][n]), str(pds[100][n]))
+            time.sleep(0.2)
+            unit = fdr.DataReader(pds['code6'][n], str(pds[-50][n]))
             unit = unit.reset_index(drop=True)
             unit_cump = (unit['Change'] + 1).cumprod()
             print( n ,  pds['기업명'][n])
-            cums['code6_%d' % n] = unit_cump
+            cums[pds['기업명'][n]] = unit_cump
         except:
-            print( n, 'nope', pds['기업명'][n])
+            print( n, 'nope-------------------', pds['기업명'][n])
+cums.to_excel('C:\\Users\\exp19103\\shinyh\\python\\close_all.xlsx')
             
-            
-            
-            
-cums.to_excel(~~)            
-#######       
-cums 가 
 # 
 cums.sum(axis=1)/len(list(cums.columns))
 
