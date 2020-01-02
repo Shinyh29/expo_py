@@ -3,7 +3,13 @@ import FinanceDataReader as fdr
 
 # plt.plot((unit['Change']+1).cumprod())
 # 날짜를 세분화 해서  두자. 쓸일있음. ex: 구간 색칠
-# plt.axvspan(df[0][0], df[-50][0], facecolor='gray');plt.plot((unit['Change']+1).cumprod())
+##########-------------https://financedata.github.io/posts/faq_matplotlib_highlight.html-----------------
+# 조비 = fdr.DataReader(조비코드, 시작날짜, end날짜)
+# plt.plot((조비['Change']+1).cumprod())
+# plt.axvspan('2015-05-18','2015-06-18', facecolor='gray', alpha =0.5)
+# plt.show()
+##########------------------------------------------------------------------------------------------------
+
 
 path = 'C:\\Users\\exp19103\\shinyh\\python\\raws.xlsm'
 df = pd.read_excel(path, "raw")
