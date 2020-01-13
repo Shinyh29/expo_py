@@ -1,0 +1,44 @@
+# 실권주 청약일정 
+import pandas as pd
+from pandas.tseries.offsets import BDay
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
+##from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import ElementNotVisibleException
+
+driver = webdriver.Chrome(executable_path='C:\\chrome_drv\\chromedriver.exe')
+
+url = "http://www.pstock.co.kr/2005pstock/gongmo/generalipo/generalipo_list.asp"
+from bs4 import BeautifulSoup as btfs
+
+import time
+today = pd.datetime.today()
+
+#### 이아래 전체를  크롤러로 만들 수도 있겠다. (단 10페이지가 넘어가면 곤란 ?)
+
+driver.get(url)
+time_year = '2020'
+
+time.sleep(0.1)
+ActionChains(driver).move_to_element(driver.find_elements_by_name('search_year')[0]).click().click().send_keys(time_year).perform()
+time.sleep(0.1)
+
+driver.find_element_by_xpath('/html/body/center/table/tbody/tr[2]/td[2]/table[2]/tbody/tr[2]/td[2]/form/table/tbody/tr/td[1]/select').click()  # 조회
+driver.find_element_by_id('ccb01').click() # 1월
+time.sleep(5)
+
+Forfeited = pd.DataFrame()
+Monthly_feits = pd.concat([Forfeited, pd.read_html(driver.page_source)[19]])[1::]
+
+u = pd.DataFrame(Monthly_feits[1::].values, columns = list(Monthly_feits[0:1].values))
+
+print(u)
+
+print(u.columns,u['청약일정',],u['실권율(%)',])
+
+time.sleep(1)
+
+driver.quit()
