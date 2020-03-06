@@ -1,0 +1,48 @@
+## cd C://Anaconda3)64
+## 그래야 Anaconda3_64 의   python 사용가능
+
+
+import FinanceDataReader as fdr
+from pandas.tseries.offsets import BDay
+import pandas as pd
+
+# KS200  or  KQ150
+
+ticker = "KS200"			# ticker 의 default 
+what_date = '2020-02-28'		# 기준일
+from_date = '2020-01-31'		# MTD 전월말
+from_ytd = '2020-01-01'		# YTD 올해첫날
+
+# 탄생일 -1 일
+# BM = KS200
+ai_birth = '2018-01-15'
+ipo_birth = '2018-01-29'
+alpha_birth = '2018-07-16'
+square_birth = '2018-08-06'
+prim_birth = '2019-04-22'
+signal_birth = '2020-02-03'
+income_birth = '2019-05-30'
+
+
+# BM = KQ150
+venture_birth = '2018-04-25'
+
+funds = ['ai_birth' ,'ipo_birth', 'alpha_birth' ,'square_birth' ,'prim_birth' ,'signal_birth', 'venture_birth','income_birth' ]
+funds_birth = [ai_birth ,ipo_birth, alpha_birth ,square_birth ,prim_birth ,signal_birth, venture_birth,income_birth  ]
+
+i = 0
+for fund_birth in funds_birth:
+    print(f'this is : {funds[i]}----------------------------------------------▼')
+    if fund_birth == str(venture_birth):
+        ticker = "KQ150"
+    else:
+        ticker = "KS200"
+    since_revenue =  100*((fdr.DataReader(ticker , what_date ,what_date )['Close'][0]/fdr.DataReader(ticker, from_date ,from_date)['Close'][0])-1)
+    print(ticker ,f' {what_date}~ {from_date } : MTD ',  format(since_revenue,".3f"), ' %' )
+
+    since_revenue =  100*((fdr.DataReader(ticker , what_date ,what_date )['Close'][0]/fdr.DataReader(ticker, pd.to_datetime(from_ytd)-BDay(2) ,pd.to_datetime(from_ytd)-BDay(2))['Close'][0])-1)
+    print(ticker ,f' {what_date}~ {pd.to_datetime(from_ytd)-BDay(1)} : YTD ',  format(since_revenue,".3f"), ' %' )
+
+    since_revenue = 100*((fdr.DataReader(ticker , what_date ,what_date )['Close'][0]/fdr.DataReader(ticker, pd.to_datetime(fund_birth)-BDay(1), pd.to_datetime(fund_birth)-BDay(1) )['Close'][0])-1)
+    print(ticker ,f' {what_date}~{pd.to_datetime(fund_birth)-BDay(1)} : ITD  {funds[i]}   ',   format(since_revenue,".3f"), ' %')
+    i = i+1
