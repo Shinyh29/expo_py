@@ -17,13 +17,21 @@ url0 = 'https://dart.fss.or.kr'
 url ='http://dart.fss.or.kr/dsac001/mainY.do' # 다트 첫 페이지 
 soup = requests.get(url)
 soup = soup.content
+print(['공시회사명', '종목코드', '대표자명', '법인구분', '법인등록번호', '사업자등록번호', '주소', '홈페이지',
+       'IR홈페이지', '전화번호', '팩스번호', '업종명', '설립일', '결산월'],
+      dtype='object', name='영문명')
 
+print(info_tb[info_tb.keys()[0]].index)
 for i in range(0,3):
     col1 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > span.nobr1'))[3][i]['href'] 
     col12 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > span.nobr1'))[3][i].text
     #for q in btfs(requests.get(url0 + col1).content,'lxml').select('tbody tr'):
         #print(q.th.text, q.td.text)
-    print(pd.read_html(url0 + col1, encoding ='utf-8', header = 1, index_col =['영문명'])[0])
+    info_tb = pd.read_html(url0 + col1, encoding ='utf-8', header = 1, index_col =['영문명'])[0]
+    print(info_tb[info_tb.keys()[0]].공시회사명)
+    print(info_tb[info_tb.keys()[0]].종목코드)
+    print(info_tb[info_tb.keys()[0]].업종명)
+    print(info_tb[info_tb.keys()[0]].대표자명)
     
     col2 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > a'))[0][i]['href']
     col21 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > a'))[0][i].text
