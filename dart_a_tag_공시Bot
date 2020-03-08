@@ -9,22 +9,9 @@ soup = requests.get(url)
 soup = soup.content
 
 ################# 중복체크 
-double_checklist = 
-pd.read_html('url')[0]['공시대상회사'] + '_' 
-+ pd.read_html('url')[0]['보고서명'] + '_' 
-+ pd.read_html('url')[0]['접수일자']
+double_checklist = pd.read_html(url)[0]['공시대상회사'] + '_' + pd.read_html(url)[0]['보고서명'] + '_' + pd.read_html(url)[0]['접수일자']
+print(double_checklist.head())
 
-
-
-import requests
-from bs4 import BeautifulSoup as btfs
-import pandas as pd
-
-
-url0 = 'https://dart.fss.or.kr'
-url ='http://dart.fss.or.kr/dsac001/mainY.do' # 다트 첫 페이지 
-soup = requests.get(url)
-soup = soup.content
 print(['공시회사명', '종목코드', '대표자명', '법인구분', '법인등록번호', '사업자등록번호', '주소', '홈페이지',
        'IR홈페이지', '전화번호', '팩스번호', '업종명', '설립일', '결산월'],
       '\n======================================================================\n======================================================================')
