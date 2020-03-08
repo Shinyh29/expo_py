@@ -23,7 +23,7 @@ for i in range(0,3):
     col12 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > span.nobr1'))[3][i].text
     #for q in btfs(requests.get(url0 + col1).content,'lxml').select('tbody tr'):
         #print(q.th.text, q.td.text)
-    print(pd.read_html(url0 + col1, encoding ='utf-8', header = 1, index_col =['영문명'])[0].['영문명'])
+    print(pd.read_html(url0 + col1, encoding ='utf-8', header = 1, index_col =['영문명'])[0])
     
     col2 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > a'))[0][i]['href']
     col21 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > a'))[0][i].text
