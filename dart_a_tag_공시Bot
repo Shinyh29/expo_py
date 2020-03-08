@@ -6,9 +6,11 @@ url ='http://dart.fss.or.kr/dsac001/mainY.do' # 다트 첫 페이지
 soup = requests.get(url)
 soup = soup.content
 
-for i in range(0,3):
-    col1 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > span.nobr1'))[3][i] 
-    col2 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > a'))[0][i]
-    print(col1) 
-    print(col2 )
+for i in range(0,4):
+    col1 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > span.nobr1'))[3][i]['href'] 
+    col12 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > span.nobr1'))[3][i].text
+    col2 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > a'))[0][i]['href']
+    col21 = pd.DataFrame(btfs(soup, 'lxml').select('table > tr > td > a'))[0][i].text
+    print(col1, col12) 
+    print(col2, col21 )
     print('------------------------------------------------------------------------------------------------')
