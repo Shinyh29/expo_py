@@ -8,6 +8,14 @@ url ='http://dart.fss.or.kr/dsac001/mainY.do' # 다트 첫 페이지
 soup = requests.get(url)
 soup = soup.content
 
+################# 중복체크 
+double_checklist = 
+pd.read_html('url')[0]['공시대상회사'] + '_' 
++ pd.read_html('url')[0]['보고서명'] + '_' 
++ pd.read_html('url')[0]['접수일자']
+
+
+
 import requests
 from bs4 import BeautifulSoup as btfs
 import pandas as pd
