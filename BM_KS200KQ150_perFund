@@ -43,6 +43,6 @@ for fund_birth in funds_birth:
     since_revenue =  100*((fdr.DataReader(ticker , what_date ,what_date )['Close'][0]/fdr.DataReader(ticker, pd.to_datetime(from_ytd)-BDay(2) ,pd.to_datetime(from_ytd)-BDay(2))['Close'][0])-1)
     print(ticker ,f' {what_date}~ {pd.to_datetime(from_ytd)-BDay(1)} : YTD ',  format(since_revenue,".3f"), ' %' )
 
-    since_revenue = 100*((fdr.DataReader(ticker , what_date ,what_date )['Close'][0]/fdr.DataReader(ticker, pd.to_datetime(fund_birth)-BDay(1), pd.to_datetime(fund_birth)-BDay(1) )['Close'][0])-1)
-    print(ticker ,f' {what_date}~{pd.to_datetime(fund_birth)-BDay(1)} : ITD  {funds[i]}   ',   format(since_revenue,".3f"), ' %')
+    since_revenue = 100*((fdr.DataReader(ticker , what_date ,what_date )['Close'][0]/fdr.DataReader(ticker, pd.to_datetime(fund_birth), pd.to_datetime(fund_birth))['Close'][0])-1)
+    print(ticker ,f' {what_date}~{pd.to_datetime(fund_birth)} : ITD  {funds[i]}   ',   format(since_revenue,".3f"), ' %')
     i = i+1
