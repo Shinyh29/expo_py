@@ -9,7 +9,13 @@ def get_mdd(x):
     peak_upper = np.argmax(arr_v[:peak_lower])
     return peak_upper, peak_lower, (arr_v[peak_lower] - arr_v[peak_upper]) / arr_v[peak_upper]
     
-import pandas as pd
-df = pd.DataFrame(data, columns=['date', 'open', 'high', 'low', 'close', 'volume'])
-mdd = get_mdd(df['close'])
-print(mdd) # 여기에 * 100 하면 % 
+#import pandas as pd
+#df = pd.DataFrame(data, columns=['date', 'open', 'high', 'low', 'close', 'volume'])
+#mdd = get_mdd(df['close'])
+#print(mdd) # 여기에 * 100 하면 % 
+
+# ---회사용  :  AITAS 41718 펀드종합정보  : '2018-01-01 ~  기준일,  엑셀로받,  수정기준가  를  x = 리스트 로 전달. 
+# x= [ a, b, c, ...d]
+# MDD 백분율
+
+print(f'{get_mdd(x)[2] * 100}  %')
