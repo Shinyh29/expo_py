@@ -1,0 +1,77 @@
+# ------------------dart OpenAPI로  분기별보고서  가져오는 프로그램
+# ------------------분기보고서 마다  코드 달름
+# ------------------ 기재정정 못가져옮
+# ------------------ 2800여 개 중에 Error 3개 나왔음 : -> 집적열어보기( 이번분기는 실적은 나옮, 전년동기분기 실적이 안나왔음 )
+
+import OpenDartReader
+import pandas as pd
+import numpy as np
+from pandas.tseries.offsets import BDay, Day
+import time
+import matplotlib.pyplot as plt
+import requests
+from bs4 import BeautifulSoup
+
+pd.set_option('display.max_rows', 10000)
+pd.set_option("display.max_columns",100)
+#pd.set_option('max_colwidth', 30)
+pd.set_option('colheader_justify', 'left')
+pd.set_option('expand_frame_repr', True)
+# pd.set_option('large_repr', 'info')
+
+plt.rcParams['figure.figsize'] = (7, 5)
+today = pd.datetime.today()
+what_date1 = today-BDay(정수n)
+what_date2 = today
+what_date1 = format(what_date1,'%Y%m%d')
+what_date2 = format(what_date2,'%Y%m%d')
+print(f'{what_date1}: {what_date2}')
+print(type(what_date1))
+
+api_key = '오픈다트_개인ApiKEY'
+dart = OpenDartReader(api_key)
+# df = dart.list_date_ex(today-BDay(1))
+# print(df)
+
+
+url = "https://opendart.fss.or.kr/api/list.json?crtfc_key=" + api_key + "&bgn_de=" + what_date1 + "&end_de=" + what_date2 + "&page_no=1&page_count=10000"
+r = requests.get(url)
+html = r.json()
+df = pd.DataFrame(html['list'])
+
+print([df.columns])
+print(df.rcept_dt[0])
+#print(df[['corp_name', 'stock_code','report_nm','rm']])
+#print(df.sort_values(by=['rcept_no'], axis=0)[::-1])
+# print(df[df['report_nm'].str.contains('분기')][['corp_name', 'stock_code','report_nm','rm']])
+df_rpt = df[df['report_nm'].str.contains('분기보고서')]
+print(f" 총 : {len(df_rpt)}")
+# print(df_rpt.head())
+
+#for unit in range(0, 5):
+# print(df_rpt.head())
+df_rprs =pd.DataFrame()
+
+for i in df_rpt.index:
+    try:
+        temp = dart.finstate(df_rpt.corp_name[i], 2020, reprt_code='11013')
+        line = temp[(temp['account_nm']=="영업이익")&(temp['fs_nm']=="연결재무제표")][[ 'bsns_year',  'stock_code',
+           'sj_div', 'sj_nm', 'account_nm', 'thstrm_nm','fs_nm',
+        'thstrm_dt', 'thstrm_amount', 'frmtrm_nm', 'frmtrm_dt', 'frmtrm_amount',
+         'ord']]
+        line['corp_name']=df_rpt.loc[i].corp_name
+        df_rprs = df_rprs.append(line)
+        print(f'{i} : {df_rpt.loc[i].corp_name}')
+
+    except Exception as e:
+        print(f'{e}: {df_rpt.loc[i].corp_name}')
+        None
+# temp = dart.finstate(df_rpt['stock_code'][0].str, 2020, reprt_code='11013')
+# print(tmep)
+#     #print(temp.columns)
+# print(temp[temp['account_nm']=="영업이익"][['reprt_code', 'bsns_year', 'corp_code', 'stock_code',
+#            'sj_div', 'sj_nm', 'account_nm', 'thstrm_nm','fs_nm',
+#         'thstrm_dt', 'thstrm_amount', 'frmtrm_nm', 'frmtrm_dt', 'frmtrm_amount',
+#          'ord']])
+print(df_rprs)
+# df_rprs.to_excel('C:\\op_1Q.xlsx')
