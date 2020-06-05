@@ -1,0 +1,35 @@
+
+
+
+url = "https://opendart.fss.or.kr/api/list.json?crtfc_key=" + api_key + "&bgn_de=20200605&end_de=20200605&corp_cls=K&page_no=1&page_count=1000"
+
+#* corp_cls	법인구분	STRING(1)	default : N	,  
+#----select (법인구분) 
+# Y(유가),
+# K(코스닥), 
+# N(코넥스), 
+# E(기타)
+#※ 없으면 전체조회, 복수조건 불가
+
+
+r = requests.get(url)
+html = r.json()
+df = pd.DataFrame(html['list'])
+
+print([df.columns])
+print(df.rcept_dt[0])
+print("'''''''''''''''''''''myTodayList'''''''''''''''''''''''''''''''''''''")
+print(f'{len(df)}: 지금 오늘 공시객수 {today} by_OpenDart')
+#df = df[['corp_name', 'stock_code','report_nm','rm','rcept_no']]
+df
+
+
+df[df['report_nm'].str.contains('단일판매')]
+dfn = pd.DataFrame();
+
+html =pd.read_html(pd.DataFrame(dart.sub_docs('20200605900139')[0])[0][1]
+
+dfn['Sector']=html[0][0]
+dfn['key']=html[0][1]
+dfn['Value']=html[0][2]
+dfn
