@@ -33,3 +33,28 @@ dfn['Sector']=html[0][0]
 dfn['key']=html[0][1]
 dfn['Value']=html[0][2]
 dfn
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''다다름 '''''''''''''''''
+''''to__Telegram '''''''''''''''''''''''
+
+
+
+
+
+
+def lambda_handler():
+
+        mytoken = '804811496:AAELXRulKZqmwzkRAP3IgqJy3kbZ0aKyY-o'  # shin29_bot_test01
+        bot = telegram.Bot(token=mytoken)
+        # chat_id = '983989510'
+        chat_id_Channel = '-1001280314622'
+
+        bot.sendMessage(chat_id=chat_id_Channel, text= new_df.iloc[-1].to_json(force_ascii=False))
+        # 한글 살려서보냄
+
+
+
+lambda_handler()
+
+
